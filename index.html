@@ -1,50 +1,49 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bitcoin Savings Plan or: How I Learned to Stop Worrying and Love the Volatility.  Inspired by (SSS) - A Sane and Simple bitcoin Savings plan.">
-
     <title>When Do I Sell My Bitcoin? The Bitcoin Withdrawal Calculator</title>
-
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
     <!-- Custom styles for this template -->
     <style>
-      body {
-        padding-top: 50px;
-      }
-      .starter-template {
-        padding: 20px 15px;
-        text-align: center;
-      }
-
-      h1 img {
-        margin: 10px 0;
-      }
-
-      thead {
-        font-weight: bold;
-      }
-
-      .lead {
-        font-size: 1.1em;
-        font-style: italic;
-        color: #48a;
-      }
-
-      .initial-row {
-        color: #aaa;
-      }
+        body {
+            padding-top: 50px;
+        }
+        
+        .starter-template {
+            padding: 20px 15px;
+            text-align: center;
+        }
+        
+        h1 img {
+            margin: 10px 0;
+        }
+        
+        thead {
+            font-weight: bold;
+        }
+        
+        .lead {
+            font-size: 1.1em;
+            font-style: italic;
+            color: #48a;
+        }
+        
+        .initial-row {
+            color: #aaa;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
-
         <div class="starter-template">
             <h1>Bitcoin Savings Plan</h1>
             <p style="color:#693;">
@@ -56,14 +55,16 @@
 
             <div class="row">
                 <div class="col-sm-4">
-                    <label class="control-label" for="inputInitial">Initial Investment</label><br/>
+                    <label class="control-label" for="inputInitial">Initial Investment</label>
+                    <br/>
                     <div class="input-group input-group-md">
                         <input type="text" id="inputInitial" class="form-control trigger" value="1">
                         <span class="input-group-addon">BTC</span>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <label class="control-label" for="inputExchRate">Initial Exchange Rate</label><br/>
+                    <label class="control-label" for="inputExchRate">Initial Exchange Rate</label>
+                    <br/>
                     <div class="input-group input-group-md">
                         <span class="input-group-addon">$</span>
                         <input type="text" id="inputExchRate" class="form-control trigger" value="5000.00">
@@ -71,69 +72,73 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <label class="control-label" for="inputInitial">Rake</label><br/>
+                    <label class="control-label" for="inputInitial">Rake</label>
+                    <br/>
                     <div class="input-group input-group-md">
-                        <input type="text" id="inputRake" class="form-control trigger" value="10">
+                        <input type="text" id="inputRake" class="form-control trigger" value="5">
                         <span class="input-group-addon">%</span>
                     </div>
                 </div>
             </div>
             <div class="row" style="margin-top: 10px;">
                 <div class="col-sm-4">
-                    <label class="control-label" for="inputCycles">Number of Cycles</label><br/>
-                    <input type="text" id="inputCycles" class="form-control input-md trigger" value="10"/>
+                    <label class="control-label" for="inputCycles">Number of Cycles</label>
+                    <br/>
+                    <input type="text" id="inputCycles" class="form-control input-md trigger" value="10" />
                 </div>
                 <div class="col-sm-4">
-                    <label class="control-label" for="inputMultiplier">Cycle Multiplier</label><br/>
+                    <label class="control-label" for="inputMultiplier">Cycle Multiplier</label>
+                    <br/>
                     <div class="input-group input-group-md">
                         <span class="input-group-addon">&#215;</span>
-                        <input type="text" id="inputMultiplier" class="form-control trigger" value="2.0"/>
+                        <input type="text" id="inputMultiplier" class="form-control trigger" value="1.5" />
                     </div>
                     <button id="btnFixed" type="button" class="btn btn-link"><span class="glyphicon glyphicon-chevron-up"></span> Set for fixed $ withdrawals</button>
                 </div>
                 <div class="col-sm-4">
-                    <label class="control-label">Output Units</label><br/>
+                    <label class="control-label">Output Units</label>
+                    <br/>
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-primary active">
-                            <input type="radio" name="options" id="btc" value="BTC">
-                            BTC
+                            <input type="radio" name="options" id="btc" value="BTC"> BTC
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="mBtc" value="mBTC">
-                            mBTC
+                            <input type="radio" name="options" id="mBtc" value="mBTC"> mBTC
                         </label>
                     </div>
                 </div>
-                </div>
-                <br/>
-      
-                    <table class="table table-curved table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <td></td>
-                                <td>$/BTC</td>
-                                <td><span class="btc">BTC</span> Remaining</td>
-                                <td><span class="btc">BTC</span> Remaining<br/>
-                                    Value in $</td>
-                                <td><span class="btc">BTC</span> Sold</td>
-                                <td>$ Out</td>
-                                <td>$ Out<br/>
-                                    Running Total</td>
-                                <td>% BTC</td>
-                            </tr>
-                        </thead>
-                        <tbody id="results"></tbody>
-                    </table>
-            <div id="dtLink"></div><br/>
-             <br/>
-         <div class="well well-lg">           
-             <h4>The plan: for every doubling in BTC value, withdraw a fixed percentage (the &ldquo;rake&rdquo;).</h4>
-             <p>Inspired by rpietila's <a href="https://web.archive.org/web/20180404082254/https://bitcointalk.org/index.php?topic=345065.0" target="_blank"><em>(SSS) - A Sane and Simple bitcoin Savings plan</em></a> at BitcoinTalk.org.</p>
-         </div>
+            </div>
+            <br/>
+
+            <table class="table table-curved table-hover table-striped">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>$/BTC</td>
+                        <td><span class="btc">BTC</span> Remaining</td>
+                        <td><span class="btc">BTC</span> Remaining
+                            <br/> Value in $</td>
+                        <td><span class="btc">BTC</span> Sold</td>
+                        <td>$ Out</td>
+                        <td>$ Out
+                            <br/> Running Total</td>
+                        <td>% BTC</td>
+                    </tr>
+                </thead>
+                <tbody id="results"></tbody>
+            </table>
+            <div id="dtLink"></div>
+            <br/>
+            <br/>
+            <div class="well well-lg">
+                <h4>The plan: for every doubling in BTC value, withdraw a fixed percentage (the &ldquo;rake&rdquo;).</h4>
+                <p>Inspired by rpietila's <a href="https://bitcointalk.org/index.php?topic=345065.0" target="_blank"><em>(SSS) - A Sane and Simple bitcoin Savings plan</em></a> at BitcoinTalk.org.</p>
+            </div>
         </div>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="js/table2csv.js"></script>
         <script src="js/bsp-uncompressed.js"></script>
 </body>
+
 </html>
