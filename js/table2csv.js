@@ -72,24 +72,3 @@ jQuery.fn.table2CSV = function (options) {
         return true;
     }
 };
-/*
-     FILE ARCHIVED ON 09:47:38 Jun 02, 2018 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 19:04:45 Jun 05, 2019.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
-/*
-playback timings (ms):
-  LoadShardBlock: 75.227 (3)
-  esindex: 0.011
-  captures_list: 137.775
-  CDXLines.iter: 19.973 (3)
-  PetaboxLoader3.datanode: 136.914 (5)
-  exclusion.robots: 0.406
-  exclusion.robots.policy: 0.392
-  RedisCDXSource: 14.473
-  PetaboxLoader3.resolve: 130.505 (2)
-  load_resource: 220.471
-*/

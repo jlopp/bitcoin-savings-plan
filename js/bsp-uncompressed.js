@@ -76,9 +76,9 @@ function updatePage() {
 		
         row.append($('<td>').html(i + 1));
         row.append($('<td>').html(formatCurrency((btcCurrentValue).toFixed(2))));
-        row.append($('<td>').html(numberWithCommas(remainingBtc.toFixed(2))));
+        row.append($('<td>').html(numberWithCommas(remainingBtc.toFixed(4))));
         row.append($('<td>').html(formatCurrency((remainingBtcValue).toFixed(2))));
-        row.append($('<td>').html(soldBtc.toFixed(2)));
+        row.append($('<td>').html(soldBtc.toFixed(4)));
         row.append($('<td>').html(formatCurrency((soldValue).toFixed(2))));
         row.append($('<td>').html(formatCurrency((runningTotal).toFixed(2))));
         row.append($('<td>').html((remainingBtcValue / (remainingBtcValue + runningTotal) * 100).toFixed(2) + '%'));
@@ -165,28 +165,7 @@ function formatCurrency(x) {
 }
 
 function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var num_parts = x.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num_parts.join(".");
 }
-
-
-/*
-     FILE ARCHIVED ON 08:22:24 Jun 02, 2018 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 19:05:38 Jun 05, 2019.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
-/*
-playback timings (ms):
-  LoadShardBlock: 134.719 (3)
-  esindex: 0.016
-  captures_list: 171.393
-  CDXLines.iter: 12.696 (3)
-  PetaboxLoader3.datanode: 152.551 (5)
-  exclusion.robots: 0.398
-  exclusion.robots.policy: 0.376
-  RedisCDXSource: 20.561
-  PetaboxLoader3.resolve: 69.577 (2)
-  load_resource: 155.941
-*/
