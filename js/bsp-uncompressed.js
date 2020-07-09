@@ -11,8 +11,8 @@ $("#btc").change(function () {
     updatePage();
 });
 
-$("#mBtc").change(function () {
-    unit = "mBTC";
+$("#Sats").change(function () {
+    unit = "Sats";
     updatePage();
 });
 
@@ -40,18 +40,18 @@ function updatePage() {
 
     $('#results').html('');
 
-    var conversionFactor = (unit == "mBTC") ? 1000 : 1;
+    var conversionFactor = (unit == "Sats") ? 100000000 : 1;
 	
 	var remainingBtc = initial;
 	remainingBtc *= conversionFactor;
-	var initialBtcOrMbtc = remainingBtc;
-	var previousBtc = initialBtcOrMbtc;
+	var initialBtcOrSats = remainingBtc;
+	var previousBtc = initialBtcOrSats;
 	
     // First row
     var row = $('<tr class="initial-row">');
     row.append($('<td>').html(''));
     row.append($('<td>').html(formatCurrency(exchange)));
-    row.append($('<td>').html(numberWithCommas(initialBtcOrMbtc.toFixed(2))));
+    row.append($('<td>').html(numberWithCommas(initialBtcOrSats.toFixed(2))));
     row.append($('<td>').html(formatCurrency(initial * exchange)));
     row.append($('<td>').html('0'));
     row.append($('<td>').html(' '));
