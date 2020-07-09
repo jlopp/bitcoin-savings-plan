@@ -78,7 +78,7 @@ function updatePage() {
         row.append($('<td>').html(formatCurrency((btcCurrentValue).toFixed(2))));
         row.append($('<td>').html(numberWithCommas(remainingBtc.toFixed(4))));
         row.append($('<td>').html(formatCurrency((remainingBtcValue).toFixed(2))));
-        row.append($('<td>').html(soldBtc.toFixed(4)));
+        row.append($('<td>').html(numberWithCommas(soldBtc.toFixed(4))));
         row.append($('<td>').html(formatCurrency((soldValue).toFixed(2))));
         row.append($('<td>').html(formatCurrency((runningTotal).toFixed(2))));
         row.append($('<td>').html((remainingBtcValue / (remainingBtcValue + runningTotal) * 100).toFixed(2) + '%'));
