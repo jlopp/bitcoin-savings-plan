@@ -1,4 +1,7 @@
+"use strict";
+
 var unit = "BTC";
+var lastCsvUrl = null;
 
 $(function () {
     updatePage();
@@ -29,24 +32,23 @@ function updatePage() {
     validateRake();
     validateCycles();
     validateMultiplier();
-    
+
     $(".btc").text(unit);
-    
+
     var initial = parseFloat(cleanString($("#inputInitial").val()));
     var exchange = parseFloat(cleanString($("#inputExchRate").val()));
     var rake = parseFloat(cleanString($("#inputRake").val()));
     var cycles = parseInt(cleanString($("#inputCycles").val()), 10);
     var multiplier = parseFloat(cleanString($("#inputMultiplier").val()));
 
-    $('#results').html('');
+    $('#results').empty();
 
-    var conversionFactor = (unit == "mBTC") ? 1000 : 1;
-	
-	var remainingBtc = initial;
-	remainingBtc *= conversionFactor;
-	var initialBtcOrMbtc = remainingBtc;
-	var previousBtc = initialBtcOrMbtc;
-	
+    var conversionFactor = (unit === "mBTC") ? 1000 : 1;
+
+    var remainingBtc = initial * conversionFactor;
+    var initialBtcOrMbtc = remainingBtc;
+    var previousBtc = initialBtcOrMbtc;
+
     // First row
     var row = $('<tr class="initial-row">');
     row.append($('<td>').html(''));
@@ -57,31 +59,30 @@ function updatePage() {
     row.append($('<td>').html(' '));
     row.append($('<td>').html(' '));
     row.append($('<td>').html('100.00%'));
-	$('#results').append(row);
+    $('#results').append(row);
 
-	var runningTotal = 0;
+    var runningTotal = 0;
 
     // Subsequent rows
     for (var i = 0; i < cycles; i++) {
-        var row = $('<tr>');
-        
-		
-		btcCurrentValue = exchange * Math.pow(multiplier, i + 1);
-		remainingBtc = remainingBtc * (1 - rake / 100);
-		remainingBtcValue = btcCurrentValue * remainingBtc / conversionFactor
-	    var soldBtc = previousBtc - remainingBtc;
-		previousBtc = remainingBtc;
-		var soldValue = btcCurrentValue * soldBtc / conversionFactor;
-		runningTotal += soldValue;
-		
+        row = $('<tr>');
+
+        var btcCurrentValue = exchange * Math.pow(multiplier, i + 1);
+        remainingBtc = remainingBtc * (1 - rake / 100);
+        var remainingBtcValue = btcCurrentValue * remainingBtc / conversionFactor;
+        var soldBtc = previousBtc - remainingBtc;
+        previousBtc = remainingBtc;
+        var soldValue = btcCurrentValue * soldBtc / conversionFactor;
+        runningTotal += soldValue;
+
         row.append($('<td>').html(i + 1));
-        row.append($('<td>').html(formatCurrency((btcCurrentValue).toFixed(2))));
+        row.append($('<td>').html(formatCurrency(btcCurrentValue)));
         row.append($('<td>').html(numberWithCommas(remainingBtc.toFixed(4))));
-        row.append($('<td>').html(formatCurrency((remainingBtcValue).toFixed(2))));
+        row.append($('<td>').html(formatCurrency(remainingBtcValue)));
         row.append($('<td>').html(soldBtc.toFixed(4)));
-        row.append($('<td>').html(formatCurrency((soldValue).toFixed(2))));
-        row.append($('<td>').html(formatCurrency((runningTotal).toFixed(2))));
-        row.append($('<td>').html((remainingBtcValue / (remainingBtcValue + runningTotal) * 100).toFixed(2) + '%'));
+        row.append($('<td>').html(formatCurrency(soldValue)));
+        row.append($('<td>').html(formatCurrency(runningTotal)));
+        row.append($('<td>').html((remainingBtc / initialBtcOrMbtc * 100).toFixed(2) + '%'));
 
         $('#results').append(row);
     }
@@ -91,13 +92,17 @@ function updatePage() {
         header: ['Cycle', '$/BTC', unit + ' Remaining', 'Value in $', unit + ' Sold', '$ Out', '$ Out Running Total', '% BTC']
     });
 
-    if (navigator.userAgent.search("Chrome") >= 0) {
-        blob = new Blob([data], { type: 'text/csv' }); //new way
-        var csvUrl = URL.createObjectURL(blob);
+    var csvUrl = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);
+    if (window.Blob && window.URL && window.URL.createObjectURL) {
+        var blob = new Blob([data], { type: 'text/csv' });
+        csvUrl = URL.createObjectURL(blob);
     }
-    else {
-        var csvUrl = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);
+
+    // Release the object URL created on the previous run so we don't leak one per recalculation.
+    if (lastCsvUrl && lastCsvUrl.indexOf('blob:') === 0) {
+        URL.revokeObjectURL(lastCsvUrl);
     }
+    lastCsvUrl = csvUrl;
 
     $('#dtLink').empty();
     $('#dtLink').append(
@@ -105,11 +110,10 @@ function updatePage() {
             .attr({
                 'href': csvUrl,
                 'download': 'bitcoinsavingsplan.csv'
-                }
-            ).html(
-                '<span class="glyphicon glyphicon-save"></span> Download data in .CSV format'
-                )
-            );
+            }).html(
+                '<i class="bi bi-download"></i> Download data in .CSV format'
+            )
+    );
 
 }
 
@@ -161,7 +165,7 @@ function cleanString(x) {
 }
 
 function formatCurrency(x) {
-    return '$' + numberWithCommas(x);
+    return '$' + numberWithCommas(parseFloat(x).toFixed(2));
 }
 
 function numberWithCommas(x) {

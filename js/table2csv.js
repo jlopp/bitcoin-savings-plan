@@ -1,5 +1,5 @@
 jQuery.fn.table2CSV = function (options) {
-    var options = jQuery.extend({
+    options = jQuery.extend({
         separator: ',',
         header: [],
         delivery: 'popup' // popup, value
@@ -7,12 +7,11 @@ jQuery.fn.table2CSV = function (options) {
     options);
 
     var csvData = [];
-    var headerArr = [];
     var el = this;
 
     //header
     var numCols = options.header.length;
-    var tmpRow = []; // construct header avalible array
+    var tmpRow = []; // construct header available array
 
     if (numCols > 0) {
         for (var i = 0; i < numCols; i++) {
@@ -34,31 +33,27 @@ jQuery.fn.table2CSV = function (options) {
         });
         row2CSV(tmpRow);
     });
+
+    var mydata = csvData.join('\n');
     if (options.delivery == 'popup') {
-        var mydata = csvData.join('\n');
         return popup(mydata);
     } else {
-        var mydata = csvData.join('\n');
         return mydata;
     }
 
     function row2CSV(tmpRow) {
         var tmp = tmpRow.join('') // to remove any blank rows
-        // alert(tmp);
         if (tmpRow.length > 0 && tmp != '') {
             var mystr = tmpRow.join(options.separator);
             csvData[csvData.length] = mystr;
         }
     }
     function formatData(input) {
-        // replace " with “
-        var regexp = new RegExp(/["]/g);
-        var output = input.replace(regexp, "“");
-        //HTML
-        var regexp = new RegExp(/\<[^\<]+\>/g);
-        var output = output.replace(regexp, "");
+        // Strip HTML tags so the export contains the cell text, not the markup.
+        var output = String(input).replace(/<[^<]+>/g, "");
         if (output == "") return '';
-        return '"' + output + '"';
+        // RFC 4180: escape embedded double quotes by doubling them.
+        return '"' + output.replace(/"/g, '""') + '"';
     }
     function popup(data) {
         var generator = window.open('', 'csv', 'height=400,width=600');
